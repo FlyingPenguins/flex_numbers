@@ -12,7 +12,7 @@ int nonNums = 0;
 
 %%
 [0-9]* {posNums++; nums++; printf("%s number\n", yytext);}
-.* {posNums++;}
+.* {posNums++; nonNums++;}
 
 %%
 
