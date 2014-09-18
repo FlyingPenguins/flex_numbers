@@ -1,8 +1,11 @@
 #flex_numbers
 
 An assignment for compiler theory class using flex to recognize various formatted numbers.
+
 CS4300, CSU Stanislaus Fall 2014
+
 Group: Flying Penguins
+
 Members/Contributors: Brandon Halpin, Bryan Garza, Zoe Fultz, Joshua Titley, Francis Tweedy
 
 Files:
