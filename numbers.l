@@ -4,6 +4,7 @@
 
 %option noyywrap
 
+
 %{
 int posNums = 0;
 int nums = 0;
@@ -13,6 +14,10 @@ int nonNums = 0;
 %%
 [-]?[0][0-9]+/[ \s\n]	{posNums++; nonNums++; printf("(%s) not a number\n", yytext);}
 [-]?([1-9][0-9]*|[0][^0-9]*)/[ \s\n] {posNums++; nums++; printf("(%s) number\n", yytext);}
+-?(([0-9]+)|([0-9]*\.[0-9]+)([eE][-+]?[0-9]+)?) {printf("%s NUMBER \n", yytext); }
+[ \t]   { }
+\n      { }
+.       { printf("%s NOT NUMBER \n", yytext); }
 
 
 %%
