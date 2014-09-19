@@ -12,6 +12,7 @@ int nonNums = 0;
 %}
 
 %%
+/* ignores incorrectly formatted nums, ie -0123 */
 [-]?[0][0-9]+/[ \s\n]	{posNums++; nonNums++; printf("(%s) not a number\n", yytext);}
 [-]?([1-9][0-9]*|[0][^0-9]*)/[ \s\n] {posNums++; nums++; printf("(%s) number\n", yytext);}
 -?(([0-9]+)|([0-9]*\.[0-9]+)([eE][-+]?[0-9]+)?) {printf("%s NUMBER \n", yytext); }
