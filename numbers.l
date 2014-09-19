@@ -11,8 +11,9 @@ int nonNums = 0;
 %}
 
 %%
-[0-9]* {posNums++; nums++; printf("%s number\n", yytext);}
-.* {posNums++; nonNums++;}
+[-]?[0][0-9]+/[ \s\n]	{posNums++; nonNums++; printf("(%s) not a number\n", yytext);}
+[-]?([1-9][0-9]*|[0][^0-9]*)/[ \s\n] {posNums++; nums++; printf("(%s) number\n", yytext);}
+
 
 %%
 
