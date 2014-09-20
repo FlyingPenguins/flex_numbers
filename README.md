@@ -13,5 +13,5 @@ Members/Contributors: Brandon Halpin, Bryan Garza, Zoe Fultz, Joshua Titley, Fra
 - `a.out`       - executable c program (lex.yy.c)
 
 ##Compilation
-- UNIX: `flex numbers.l && gcc lex.yy.c && ./a.out`
+- UNIX: `flex numbers.l && gcc lex.yy.c && ./a.out < in | less`
 - Windows: `FIXME`
