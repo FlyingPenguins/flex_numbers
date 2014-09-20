@@ -5,32 +5,32 @@
 
 %option noyywrap
 
-
 %{
-int posNums = 0;
-int nums = 0;
-int nonNums = 0;
+int possibleNumbers = 0;
+int numbersFound = 0;
+int falseNumbers = 0;
 %}
 
-%%
--?00/[ \s\n] {posNums++; nums++; printf("(%s) Octal number rule 1, for -?00\n", yytext); }
--?0[1-7][0-7]+/[ \s\n] {posNums++; nums++; printf("(%s) Octal number rule 2, for -?0[1-7][0-7]...\n", yytext); }
--?[0-9]*[a-zA-Z]+[a-zA-Z0-9]+/[ \s\n] {posNums++; nonNums++; printf("(%s) not a number! matching 06a...\n", yytext); }
-[-]?[0][0-9]+/[ \s\n]	{posNums++; nonNums++; printf("(%s) not a number\n", yytext);}
-
-[-]?(0X|0x)[a-fA-F0-9]+/[\s\n] {posNums++; nums++; printf("(%s) number through hex rule 1\n", yytext);}
-
-[-]?([1-9][0-9]*|[0][^0-9]*)/[ \s\n] {posNums++; nums++; printf("(%s) number\n", yytext);}
--?(([0-9]+)|([0-9]*\.[0-9]+)([eE][-+]?[0-9]+)?)/[ \s\n] {printf("%s NUMBER \n", yytext); }
-[ \t]   { }
-\n      { }
-.       { printf("%s didn't match any rule, just .  \n", yytext); }
-
+ZERO            [-?]0{1,2}|(0X|0x)0
+OCTDIGIT        -?(0[1-7][0-7]*)
+HEXDIGIT        -?((0X|0x)[1-9A-F]+[0-9A-F]*)
+DECDIGIT        -?([1-9][0-9]+)
+XDIGIT          -?(([0-9]*\.[0-9]+)([eE][-+]?[0-9]+)?)
 
 %%
+{ZERO}          {printf("%s NUMBER ZERO\n", yytext); numbersFound++; }
+{OCTDIGIT}      {printf("%s NUMBER OCTDIGIT\n", yytext); numbersFound++; }
+{DECDIGIT}      {printf("%s NUMBER DECDIGIT\n", yytext); numbersFound++; }
+{HEXDIGIT}      {printf("%s NUMBER HEXDIGIT\n", yytext); numbersFound++; }
+{XDIGIT}        {printf("%s NUMBER XDIGIT\n", yytext); numbersFound++; }
+.*              {printf("%s NOT NUMBER\n", yytext); falseNumbers++; }
+%%
 
-int main(int argc, char **argv)
+main(int argc, char **argv)
 {
-yylex();
-printf("Out of %d possible numbers, there were %d numbers, and %d not numbers.\n", posNums, nums, nonNums);
+        yylex();
+        possibleNumbers = numbersFound + falseNumbers;
+        printf("The total possible numbers was %d\n", possibleNumbers );
+        printf("The total number of actual numbers was %d\n", numbersFound);
+        printf("The number of rejected numbers was %d\n", falseNumbers);
 }
