@@ -1,7 +1,9 @@
 /* Team: Francis, Brandon, Josh, Bryan */
-/* (not) just like Unix wc */
-/* code from first example here: */
-/*        ftp://ftp.iecc.com/pub/file/flexbison.zip */
+/*
+ * (not) just like Unix wc
+ * code from first example here:
+ * ftp://ftp.iecc.com/pub/file/flexbison.zip
+*/
 
 %option noyywrap
 
