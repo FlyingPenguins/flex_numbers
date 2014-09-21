@@ -15,6 +15,7 @@ int falseNumbers = 0;
 
 ALPHANUM        [0-9a-zA-Z]
 ONEZERO         -?00?
+ONEDIGIT        -?[0-9]
 ZERO            [-?](0{1,2}|(0X|0x))0
 OCTDIGIT        -?(0[1-7][0-7]*)
 HEXDIGIT        -?((0X|0x)(0|[1-9A-F]+[0-9A-F]*))
@@ -25,8 +26,9 @@ NUMSLETS        -?([0-9a-zG-WYZ]+)
 MULTIDOT        -?{ALPHANUM}*\.{ALPHANUM}*\.{ALPHANUM}*
 
 %%
-{ZERO}          {printf("%s NUMBER ZERO\n", yytext); numbersFound++; }
+{ZERO}          {printf("%s[1;31m NUMBER ZERO\n", yytext); numbersFound++; }
 {ONEZERO}       {printf("%s NUMBER ONEZERO\n", yytext); numbersFound++; }
+{ONEDIGIT}      {printf("%s NUMBER ONEDIGIT\n", yytext); numbersFound++; }
 {OCTDIGIT}      {printf("%s NUMBER OCTDIGIT\n", yytext); numbersFound++; }
 {DECDIGIT}      {printf("%s NUMBER DECDIGIT\n", yytext); numbersFound++; }
 {HEXDIGIT}      {printf("%s NUMBER HEXDIGIT\n", yytext); numbersFound++; }
