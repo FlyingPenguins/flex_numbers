@@ -26,7 +26,7 @@ NUMSLETS        -?([0-9a-zG-WYZ]+)
 MULTIDOT        -?{ALPHANUM}*\.{ALPHANUM}*\.{ALPHANUM}*
 
 %%
-{ZERO}          {printf("%s[1;31m NUMBER ZERO\n", yytext); numbersFound++; }
+{ZERO}          {printf("%s NUMBER ZERO\n", yytext); numbersFound++; }
 {ONEZERO}       {printf("%s NUMBER ONEZERO\n", yytext); numbersFound++; }
 {ONEDIGIT}      {printf("%s NUMBER ONEDIGIT\n", yytext); numbersFound++; }
 {OCTDIGIT}      {printf("%s NUMBER OCTDIGIT\n", yytext); numbersFound++; }
