@@ -36,9 +36,9 @@ MULTIDOT        -?{ALPHANUM}*\.{ALPHANUM}*\.{ALPHANUM}*
 {NUMSLETS}      {printf("%s NOT NUM (NUMSLETS)\n", yytext); falseNumbers++; }
 {MULTIDOT}      {printf("%s NOT NUM (MULTIDOT)\n", yytext); falseNumbers++; }
 {NOTHEX}        {printf("%s NOT NUM (NOTHEX)\n", yytext); falseNumbers++; }
-[ \t] { }
-\n { }
-.              {printf("%s NOT NUMBER\n", yytext); falseNumbers++; }
+[ \t]           { }
+\n              { }
+.               {printf("%s NOT NUMBER\n", yytext); falseNumbers++; }
 %%
 
 main(int argc, char **argv)
