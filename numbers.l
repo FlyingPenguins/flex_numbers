@@ -16,7 +16,7 @@ int falseNumbers = 0;
 ALPHANUM        [0-9a-zA-Z]
 ONEZERO         -?00?
 ONEDIGIT        -?[0-9]
-ZERO            [-?](0{1,2}|(0X|0x))0
+ZERO            [-?](0{1,2}|(0X|0x))
 OCTDIGIT        -?(0[1-7][0-7]*)
 HEXDIGIT        -?((0X|0x)(0|[1-9A-F]+[0-9A-F]*))
 NOTHEX          -?{HEXDIGIT}[a-zG-Z]+
