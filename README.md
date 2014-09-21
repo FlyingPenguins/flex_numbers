@@ -2,6 +2,8 @@
 
 An assignment for compiler theory class using flex to recognize various formatted numbers.
 
+http://csustan.csustan.edu/~tom/classes/F14/CS4300/Projects/Project1/Project-1.pdf
+
 CS4300, CSU Stanislaus Fall 2014
 
 ##Group: Flying Penguins
@@ -13,5 +15,7 @@ Members/Contributors: Brandon Halpin, Bryan Garza, Zoe Fultz, Joshua Titley, Fra
 - `a.out`       - executable c program (lex.yy.c)
 
 ##Compilation
-- UNIX: `flex numbers.l && gcc lex.yy.c && ./a.out < in | less`
-- Windows: `FIXME`
+- UNIX: `flex numbers.l && gcc lex.yy.c && ./a.out < in`
+
+##Testing
+Please test for edge cases! We have to make sure everything works as intended
