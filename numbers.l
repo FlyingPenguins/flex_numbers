@@ -23,7 +23,7 @@ NOTHEX          -?{HEXDIGIT}[a-zG-Z]+
 DECDIGIT        -?([1-9][0-9]+)
 XDIGIT          -?(([0-9]*\.[0-9]+)([eE][-+]?[0-9]+)?)
 NUMSLETS        -?([0-9a-zG-WYZ]+)
-MULTIDOT        -?{ALPHANUM}*\.{ALPHANUM}*\.{ALPHANUM}*
+MULTIDOT        -?({ALPHANUM}*\.{ALPHANUM}*\.{ALPHANUM}*\.*{ALPHANUM}*)+
 
 %%
 {ZERO}          {printf("%s NUMBER ZERO\n", yytext); numbersFound++; }
