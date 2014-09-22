@@ -1,4 +1,4 @@
-/* Team: Francis, Brandon, Josh, Bryan */
+/* Team: Francis, Brandon, Josh, Bryan, Zoe */
 /*
  * (not) just like Unix wc
  * code from first example here:
