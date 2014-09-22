@@ -23,7 +23,7 @@ ONEZERO         -?00?
 ONEDIGIT        -?[0-9]
 ZERO            [-?](0{1,2}|(0X|0x))
 
-/* Decimal number case */
+/* Decimal number case, by Brandon */
 DECDIGIT        -?([1-9][0-9]+)
 
 /* Hexadecimal case by Francis */
