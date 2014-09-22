@@ -13,39 +13,60 @@ int numbersFound = 0;
 int falseNumbers = 0;
 %}
 
-ALPHANUM        [0-9a-zA-Z]
+/*
+ * Simple cases: single/double zero, digit, and more general zero case.  It was
+ * better to abstract the single digit cases, because not only did it make the
+ * other regular expressions shorter, but it also was a lot easier than trying
+ * to cram every possible edge case into a single expression.
+ */
 ONEZERO         -?00?
 ONEDIGIT        -?[0-9]
 ZERO            [-?](0{1,2}|(0X|0x))
-OCTDIGIT        -?(0[1-7][0-7]*)
-HEXDIGIT        -?((0X|0x)(0|[1-9A-F]+[0-9A-F]*))
-NOTHEX          -?{HEXDIGIT}[a-zG-Z]+
+
+/* Decimal number case */
 DECDIGIT        -?([1-9][0-9]+)
+
+/* Hexadecimal case by Francis */
+HEXDIGIT        -?((0X|0x)(0|[1-9A-F]+[0-9A-F]*))
+
+/* Exponents case by Josh */
 XDIGIT          -?(([0-9]*\.[0-9]+)([eE][-+]?[0-9]+)?)
+
+/* The following are by Bryan, Josh helped by testing for edge cases. */
+/* Octal case, the single and double zero case is dealt with in ONEZERO case */
+OCTDIGIT        -?(0[1-7][0-7]*)
+/* Non numbers, similar format to hex. These weren't getting caught anywhere
+ * else, so we have to capture them by matching hex + incorrect ending */
+NOTHEX          -?{HEXDIGIT}[a-zG-Z]+
+/* Numbers and letters that are non numbers */
 NUMSLETS        -?([0-9a-zG-WYZ]+)
+/* Multiple periods in a non-number. Handles any number of periods, and
+ * uses alphanumeric case, for readability, wrapped in a + at the end to allow
+ * for any amount of the case getting repeated. */
+ALPHANUM        [0-9a-zA-Z]
 MULTIDOT        -?({ALPHANUM}*\.{ALPHANUM}*\.{ALPHANUM}*\.*{ALPHANUM}*)+
 
 %%
-{ZERO}          {printf("%s NUMBER ZERO\n", yytext); numbersFound++; }
-{ONEZERO}       {printf("%s NUMBER ONEZERO\n", yytext); numbersFound++; }
-{ONEDIGIT}      {printf("%s NUMBER ONEDIGIT\n", yytext); numbersFound++; }
-{OCTDIGIT}      {printf("%s NUMBER OCTDIGIT\n", yytext); numbersFound++; }
-{DECDIGIT}      {printf("%s NUMBER DECDIGIT\n", yytext); numbersFound++; }
-{HEXDIGIT}      {printf("%s NUMBER HEXDIGIT\n", yytext); numbersFound++; }
-{XDIGIT}        {printf("%s NUMBER XDIGIT\n", yytext); numbersFound++; }
-{NUMSLETS}      {printf("%s NOT NUM (NUMSLETS)\n", yytext); falseNumbers++; }
-{MULTIDOT}      {printf("%s NOT NUM (MULTIDOT)\n", yytext); falseNumbers++; }
-{NOTHEX}        {printf("%s NOT NUM (NOTHEX)\n", yytext); falseNumbers++; }
+{ZERO}          {printf("%s number\n", yytext); numbersFound++; }
+{ONEZERO}       {printf("%s number\n", yytext); numbersFound++; }
+{ONEDIGIT}      {printf("%s number\n", yytext); numbersFound++; }
+{OCTDIGIT}      {printf("%s number\n", yytext); numbersFound++; }
+{DECDIGIT}      {printf("%s number\n", yytext); numbersFound++; }
+{HEXDIGIT}      {printf("%s number\n", yytext); numbersFound++; }
+{XDIGIT}        {printf("%s number\n", yytext); numbersFound++; }
+{NUMSLETS}      {printf("%s not number\n", yytext); falseNumbers++; }
+{MULTIDOT}      {printf("%s not number\n", yytext); falseNumbers++; }
+{NOTHEX}        {printf("%s not number\n", yytext); falseNumbers++; }
 [ \t]           { }
 \n              { }
-.               {printf("%s NOT NUMBER\n", yytext); falseNumbers++; }
+.               {printf("%s not number\n", yytext); falseNumbers++; }
 %%
 
 main(int argc, char **argv)
 {
         yylex();
         possibleNumbers = numbersFound + falseNumbers;
-        printf("The total possible numbers was %d\n", possibleNumbers );
-        printf("The total number of actual numbers was %d\n", numbersFound);
-        printf("The number of rejected numbers was %d\n", falseNumbers);
+        printf("Out of %d possible numbers, ", possibleNumbers );
+        printf("there were %d numbers, and ", numbersFound);
+        printf("%d not numbers.\n", falseNumbers);
 }
