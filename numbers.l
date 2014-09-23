@@ -30,7 +30,7 @@ DECDIGIT        -?([1-9][0-9]+)
 HEXDIGIT        -?((0X|0x)(0|[1-9A-F]+[0-9A-F]*))
 
 /* Exponents case by Josh */
-XDIGIT          -?(([0-9]*\.[0-9]+)([eE][-+]?[0-9]+)?)
+XDIGIT          -?(((0\.[0-9]+)|([1-9][0-9]*\.?[0-9]*))([eE][-+]?[0-9]+)?)
 
 /* The following are by Bryan, Josh helped by testing for edge cases. */
 /* Octal case, the single and double zero case is dealt with in ONEZERO case */
@@ -46,20 +46,21 @@ NUMSLETS        -?([0-9a-zG-WYZ]+)
 ALPHANUM        [0-9a-zA-Z]
 MULTIDOT        -?({ALPHANUM}*\.{ALPHANUM}*\.{ALPHANUM}*\.*{ALPHANUM}*)+
 
+SPACE		[ \n\t\r]
+NOTSPACE	[^ \n\t\r]
+
 %%
-{ZERO}          {printf("%s number\n", yytext); numbersFound++; }
-{ONEZERO}       {printf("%s number\n", yytext); numbersFound++; }
-{ONEDIGIT}      {printf("%s number\n", yytext); numbersFound++; }
-{OCTDIGIT}      {printf("%s number\n", yytext); numbersFound++; }
-{DECDIGIT}      {printf("%s number\n", yytext); numbersFound++; }
-{HEXDIGIT}      {printf("%s number\n", yytext); numbersFound++; }
-{XDIGIT}        {printf("%s number\n", yytext); numbersFound++; }
-{NUMSLETS}      {printf("%s not number\n", yytext); falseNumbers++; }
-{MULTIDOT}      {printf("%s not number\n", yytext); falseNumbers++; }
-{NOTHEX}        {printf("%s not number\n", yytext); falseNumbers++; }
-[ \t]           { }
-\n              { }
-.               {printf("%s not number\n", yytext); falseNumbers++; }
+{ZERO}/{SPACE}          {printf("%s number\n", yytext); numbersFound++; }
+{ONEZERO}/{SPACE}       {printf("%s number\n", yytext); numbersFound++; }
+{ONEDIGIT}/{SPACE}      {printf("%s number\n", yytext); numbersFound++; }
+{OCTDIGIT}/{SPACE}      {printf("%s number\n", yytext); numbersFound++; }
+{DECDIGIT}/{SPACE}      {printf("%s number\n", yytext); numbersFound++; }
+{HEXDIGIT}/{SPACE}      {printf("%s number\n", yytext); numbersFound++; }
+{XDIGIT}/{SPACE}        {printf("%s number\n", yytext); numbersFound++; }
+{NUMSLETS}/{SPACE}      {printf("%s not number\n", yytext); falseNumbers++; }
+{MULTIDOT}/{SPACE}      {printf("%s not number\n", yytext); falseNumbers++; }
+{NOTHEX}/{SPACE}        {printf("%s not number\n", yytext); falseNumbers++; }
+{NOTSPACE}+/{SPACE}     {printf("%s not number\n", yytext); falseNumbers++; }
 %%
 
 main(int argc, char **argv)
